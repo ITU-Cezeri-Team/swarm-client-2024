@@ -1,9 +1,11 @@
 import paho.mqtt.client as mqtt
 import json
 from process_message import process_message
+from logger import log_incoming_message
 
 
 TOPIC_LIST = ["drone/1", "drone/2", "drone/3"]
+LOG_PATH = "logs/"
 
 
 def start_client():
@@ -15,6 +17,7 @@ def start_client():
     def on_message(client: mqtt.Client, userdata, message: mqtt.MQTTMessage) -> None:
         message.payload.decode()
         json_data = json.loads(message.payload.decode())
+        log_incoming_message(json_data, LOG_PATH)
         process_message(json_data, client)
 
     def on_connect(client: mqtt.Client, userdata, flags, rc) -> None:
@@ -34,5 +37,5 @@ def start_client():
     client.loop_forever()
 
 
-if __name__ == "_main_":
+if __name__ == "__main__":
     start_client()
