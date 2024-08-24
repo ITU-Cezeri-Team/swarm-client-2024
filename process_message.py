@@ -1,10 +1,9 @@
 import paho.mqtt.client as mqtt
 from heartbeat import start_heartbeat
 from pymavlink_helper import PyMavlinkHelper
+from heartbeat_processor import HeartbeatProcessor
 from get_current_state import start_publishing_state
-
-
-topic = "server"
+import time
 
 MESSAGE_TYPES = {
     "init_connection": "init_connection",
@@ -15,12 +14,18 @@ MESSAGE_TYPES = {
     "move": "move",
     "set_mode": "set_mode",
     "heartbeat": "heartbeat",
+    "end_connection": "end_connection",
 }
 
 
 def process_message(
-    message: dict, client: mqtt.Client, helper: PyMavlinkHelper
+    message: dict,
+    client: mqtt.Client,
+    helper: PyMavlinkHelper,
+    heartbeat_processor: HeartbeatProcessor,
+    client_id: int,
 ) -> None:
+    topic = "server" + str(client_id)
     message_type = message["msg_type"]
     if message_type == MESSAGE_TYPES["init_connection"]:
         helper.initialize()
@@ -30,15 +35,18 @@ def process_message(
         start_heartbeat(client, heartbeat_interval)
         start_publishing_state(client, helper, topic, state_interval)
 
-        pass
     elif message_type == MESSAGE_TYPES["arm"]:
         helper.arm(message["args"]["force"])
+
     elif message_type == MESSAGE_TYPES["disarm"]:
         helper.disarm(message["args"]["force"])
+
     elif message_type == MESSAGE_TYPES["takeoff"]:
         helper.takeoff(message["args"]["altitude"])
+
     elif message_type == MESSAGE_TYPES["land"]:
         helper.land()
+
     elif message_type == MESSAGE_TYPES["move"]:
         helper.move(
             message["args"]["lat"],
@@ -48,9 +56,17 @@ def process_message(
             message["args"]["vy"],
             message["args"]["vz"],
         )
+
     elif message_type == MESSAGE_TYPES["set_mode"]:
-        pass
+        helper.set_mode(message["args"]["mode"])
+
     elif message_type == MESSAGE_TYPES["heartbeat"]:
-        pass
+        heartbeat_processor.recieve_heartbeat()
+
+    elif message_type == MESSAGE_TYPES["end_connection"]:
+        client.disconnect()
+        time.sleep(2)
+        exit()
+
     else:
         raise ValueError("Invalid message type")
