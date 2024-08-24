@@ -2,7 +2,7 @@ from pymavlink import mavutil
 import time
 from pymavlink_utils import (
     request_global_position,
-    set_mode,
+    set_drone_mode,
     try_recv_match,
     send_position_target_global_int,
 )
@@ -30,7 +30,7 @@ class PyMavlinkHelper:
 
         request_global_position(vehicle, rate=10)
         time.sleep(0.5)
-        set_mode(vehicle, "LOITER")
+        set_drone_mode(vehicle, "LOITER")
 
     def arm(self, force) -> None:
         """
@@ -200,7 +200,7 @@ class PyMavlinkHelper:
             self._log_message(f"Error moving drone: {str(e)}")
 
     def set_mode(self, mode: str) -> None:
-        pass
+        set_drone_mode(self.vehicle, mode)
 
     def get_current_state(self) -> Tuple[float, float, float]:
         msg = try_recv_match(self.vehicle, message_name="GLOBAL_POSITION_INT")
