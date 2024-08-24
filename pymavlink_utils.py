@@ -55,7 +55,7 @@ def request_global_position(drone, rate=2):
     print(f"Requested GLOBAL_POSITION_INT data stream at {rate} Hz")
 
 
-def set_mode(drone: mavutil.mavlink_connection, mode: str) -> None:
+def set_drone_mode(drone: mavutil.mavlink_connection, mode: str) -> None:
     """
     Sets the flight mode of the drone.
 
