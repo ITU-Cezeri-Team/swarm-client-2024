@@ -2,23 +2,25 @@ import paho.mqtt.client as mqtt
 import json
 from process_message import process_message
 from logger import log_incoming_message
+from pymavlink_helper import PyMavlinkHelper
 
 
 TOPIC_LIST = ["drone/1", "drone/2", "drone/3"]
 LOG_PATH = "logs/"
+PIXHAWK_CONNECTION_STRING = "serial:/dev/ttyAMA0:115200"
 
 
 def start_client():
+    helper = PyMavlinkHelper(PIXHAWK_CONNECTION_STRING)
     # MQTT Configuration
     BROKER = "192.168.1.127"
     PORT = 1883
     CLIENT_ID = "CLIENT1"
 
     def on_message(client: mqtt.Client, userdata, message: mqtt.MQTTMessage) -> None:
-        message.payload.decode()
         json_data = json.loads(message.payload.decode())
         log_incoming_message(json_data, LOG_PATH)
-        process_message(json_data, client)
+        process_message(json_data, client, helper)
 
     def on_connect(client: mqtt.Client, userdata, flags, rc) -> None:
         if rc == 0:
