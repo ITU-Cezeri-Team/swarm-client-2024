@@ -6,7 +6,7 @@
    - Insert the SD card into your Raspberry Pi and power it on.
 
 #### 2. Enable SSH and Serial Port
-   - Once the Raspberry Pi boots, log in with the default credentials (Username: `pi`, Password: `raspberry`).
+   - Once the Raspberry Pi boots, log in with the default credentials (Username: `cezeri`, Password: `cezeri`).
    - Run the configuration tool:
      ```bash
      sudo raspi-config
