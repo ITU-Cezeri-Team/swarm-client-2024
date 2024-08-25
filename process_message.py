@@ -32,7 +32,7 @@ def process_message(
 
         heartbeat_interval = message["args"]["heartbeat_interval"] / 1000
         state_interval = message["args"]["state_interval"] / 1000
-        start_heartbeat(client, heartbeat_interval)
+        start_heartbeat(client, heartbeat_interval, topic)
         start_publishing_state(client, helper, topic, state_interval)
 
     elif message_type == MESSAGE_TYPES["arm"]:
