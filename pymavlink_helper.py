@@ -54,6 +54,7 @@ class PyMavlinkHelper:
                 0,
                 0,
             )
+            print("trying recv match of arm")
             ack_msg = try_recv_match(self.vehicle, message_name="COMMAND_ACK")
             if ack_msg.result == mavutil.mavlink.MAV_RESULT_ACCEPTED:
                 time.sleep(2)
