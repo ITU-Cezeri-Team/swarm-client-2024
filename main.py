@@ -8,7 +8,7 @@ import argparse
 
 
 LOG_PATH = "logs/"
-PIXHAWK_CONNECTION_STRING = "serial:/dev/serial0:57600"
+PIXHAWK_CONNECTION_STRING = "dev/serial0"
 
 
 def start_client(client_id):
