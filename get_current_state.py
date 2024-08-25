@@ -22,6 +22,6 @@ def publish_state(client, helper, topic):
             "alt": altitude,
         }
         client.publish(topic, str(state_msg))
-        print(f"Published state to topic {topic}: {state_msg}")
+        # print(f"Published state to topic {topic}: {state_msg}")
     else:
         print("Failed to retrieve GPS coordinates, not publishing.")
