@@ -22,6 +22,7 @@ def start_client(client_id):
 
     def on_message(client: mqtt.Client, userdata, message: mqtt.MQTTMessage) -> None:
         json_data = json.loads(message.payload.decode())
+        print(f"Received message: {json_data}")
         log_incoming_message(json_data, LOG_PATH)
         process_message(json_data, client, helper, heartbeat_processor, client_id)
 
