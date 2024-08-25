@@ -23,6 +23,7 @@ class PyMavlinkHelper:
         """
         Initialize the environment.
         """
+        print("Trying to connect to Pixhawk")
         vehicle = mavutil.mavlink_connection(self.connection_string, timeout=30)
         vehicle.wait_heartbeat()
         self.vehicle = vehicle

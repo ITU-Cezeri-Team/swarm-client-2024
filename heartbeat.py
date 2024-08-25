@@ -21,6 +21,7 @@ def send_heartbeat(
 
 
 def start_heartbeat(client: mqtt.Client, heartbeat_interval: int, topic: str):
+    print(f"Starting heartbeat with interval {heartbeat_interval} seconds")
     threading.Thread(
         target=send_heartbeat, args=(heartbeat_interval, client, topic)
     ).start()
