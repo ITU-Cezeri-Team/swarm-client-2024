@@ -30,8 +30,8 @@ class PyMavlinkHelper:
         self.vehicle = vehicle
         print("Connected to Pixhawk")
 
-        # request_global_position(vehicle, rate=40)
-        try_recv_match(vehicle, message_name="COMMAND_ACK")
+        request_global_position(vehicle, rate=5)
+        # try_recv_match(vehicle, message_name="COMMAND_ACK")
         time.sleep(0.5)
         set_drone_mode(vehicle, "GUIDED")
         time.sleep(0.5)
