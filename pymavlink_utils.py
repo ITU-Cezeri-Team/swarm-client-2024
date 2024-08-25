@@ -2,7 +2,7 @@ from pymavlink import mavutil
 import time
 
 
-def try_recv_match(vehicle, message_name, retries=10, timeout=5, blocking=False):
+def try_recv_match(vehicle, message_name, retries=10, timeout=0.5, blocking=False):
     """
     Tries to receive a MAVLink message by matching the message name.
 
