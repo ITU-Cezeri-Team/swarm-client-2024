@@ -33,6 +33,7 @@ class PyMavlinkHelper:
         request_global_position(vehicle, rate=40)
         time.sleep(0.5)
         set_drone_mode(vehicle, "LOITER")
+        time.sleep(0.5)
 
     def arm(self, force) -> None:
         """
@@ -55,6 +56,7 @@ class PyMavlinkHelper:
             )
             # ack_msg = try_recv_match(self.vehicle, message_name="COMMAND_ACK")
             if True:  # ack_msg.result == mavutil.mavlink.MAV_RESULT_ACCEPTED:
+                time.sleep(2)
                 set_drone_mode(self.vehicle, "GUIDED")
                 print(f"Drone armed")
             else:

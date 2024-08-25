@@ -94,26 +94,26 @@ def set_drone_mode(drone: mavutil.mavlink_connection, mode: str) -> None:
 
     # Wait for ACK command
     # MAVLink requires an ACK from the drone to confirm the mode change
-    ack = None
-    while not ack:
-        ack = try_recv_match(drone, message_name="COMMAND_ACK")
-        if ack:
-            try:
-                ack_result = ack.result
-                if ack.command == mavutil.mavlink.MAV_CMD_DO_SET_MODE:
-                    if ack_result == mavutil.mavlink.MAV_RESULT_ACCEPTED:
-                        print(f"Mode change to {mode} accepted")
-                    else:
-                        print(
-                            f"Mode change to {mode} failed with result {ack_result}"  # TODO assert exception here
-                        )
-                    break
-            except AttributeError as e:
-                print(
-                    f"Error processing ACK message: {e}"
-                )  # TODO assert exception here
-        else:
-            print("No ACK received, retrying...")
+    # ack = None
+    # while not ack:
+    #     ack = try_recv_match(drone, message_name="COMMAND_ACK")
+    #     if ack:
+    #         try:
+    #             ack_result = ack.result
+    #             if ack.command == mavutil.mavlink.MAV_CMD_DO_SET_MODE:
+    #                 if ack_result == mavutil.mavlink.MAV_RESULT_ACCEPTED:
+    #                     print(f"Mode change to {mode} accepted")
+    #                 else:
+    #                     print(
+    #                         f"Mode change to {mode} failed with result {ack_result}"  # TODO assert exception here
+    #                     )
+    #                 break
+    #         except AttributeError as e:
+    #             print(
+    #                 f"Error processing ACK message: {e}"
+    #             )  # TODO assert exception here
+    #     else:
+    #         print("No ACK received, retrying...")
 
 
 def send_position_target_global_int(
