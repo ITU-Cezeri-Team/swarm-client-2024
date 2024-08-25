@@ -82,7 +82,7 @@ class PyMavlinkHelper:
                 0,
             )
             ack_msg = try_recv_match(self.vehicle, message_name="COMMAND_ACK")
-            if ack_msg.result == mavutil.mavlink.MAV_RESULT_ACCEPTED:
+            if ack_msg != None and ack_msg.result == mavutil.mavlink.MAV_RESULT_ACCEPTED:
                 print(f"Drone disarmed")
             else:
                 print(f"Failed to disarm drone")
@@ -100,6 +100,8 @@ class PyMavlinkHelper:
         def monitor_altitude():
             while True:
                 msg = try_recv_match(self.vehicle, message_name="GLOBAL_POSITION_INT")
+                if msg == None:
+                    continue
                 altitude = msg.relative_alt / 1000.0  # altitude in meters
                 print(f"Altitude: {altitude}")
                 if altitude >= target_altitude * 0.85:  # 85% of target altitude
@@ -141,6 +143,8 @@ class PyMavlinkHelper:
         def monitor_landing():
             while True:
                 msg = try_recv_match(self.vehicle, message_name="GLOBAL_POSITION_INT")
+                if msg == None:
+                    continue
                 altitude = msg.relative_alt / 1000.0  # altitude in meters
                 print(f"Drone Altitude: {altitude}")
                 if (
@@ -204,6 +208,8 @@ class PyMavlinkHelper:
 
     def get_current_state(self) -> Tuple[float, float, float]:
         msg = try_recv_match(self.vehicle, message_name="GLOBAL_POSITION_INT")
+        if msg == None:
+            return None
         latitude = msg.lat / 1e7
         longtitude = msg.lon / 1e7
         altitude = msg.relative_alt / 1000.0
