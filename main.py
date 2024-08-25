@@ -18,6 +18,7 @@ def start_client(client_id):
     BROKER = "192.168.1.127"
     PORT = 1883
     CLIENT_ID = "CLIENT_" + str(client_id)
+    topic = "drone/" + str(client_id)
 
     def on_message(client: mqtt.Client, userdata, message: mqtt.MQTTMessage) -> None:
         json_data = json.loads(message.payload.decode())
@@ -27,6 +28,7 @@ def start_client(client_id):
     def on_connect(client: mqtt.Client, userdata, flags, rc) -> None:
         if rc == 0:
             print(f"Connected to MQTT Broker as {CLIENT_ID}")
+            client.subscribe(topic)
         else:
             print(f"Failed to connect, return code {rc}")
 
