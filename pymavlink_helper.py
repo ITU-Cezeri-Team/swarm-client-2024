@@ -28,7 +28,7 @@ class PyMavlinkHelper:
         self.vehicle = vehicle
         print("Connected to Pixhawk")
 
-        request_global_position(vehicle, rate=10)
+        request_global_position(vehicle, rate=40)
         time.sleep(0.5)
         set_drone_mode(vehicle, "LOITER")
 
@@ -189,15 +189,12 @@ class PyMavlinkHelper:
         """
         try:
             # Send position target
-            send_position_target_global_int(self.vehicle, lat, lon, alt, vx, vy, vz)
+            send_position_target_global_int(self.vehicle, lat, lon, alt, 0, 0, 0)
 
-            # Log the movement
-            self._log_message(
-                f"Drone moving to {lat, lon, alt} with velocity {vx, vy, vz}"
-            )
+            print(f"Drone moving to {lat, lon, alt} with velocity 0, 0, 0")
 
         except Exception as e:
-            self._log_message(f"Error moving drone: {str(e)}")
+            print(f"Error moving drone: {str(e)}")
 
     def set_mode(self, mode: str) -> None:
         set_drone_mode(self.vehicle, mode)
