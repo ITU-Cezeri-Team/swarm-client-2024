@@ -14,7 +14,10 @@ def start_publishing_state(client, helper, topic, state_interval):
 
 
 def publish_state(client, helper, topic):
-    latitude, longitude, altitude = helper.get_current_state()
+    positions = helper.get_current_state()
+    if positions == None:
+        return
+    latitude, longitude, altitude = positions
     if latitude is not None and longitude is not None and altitude is not None:
         state_msg = {
             "lat": latitude,
