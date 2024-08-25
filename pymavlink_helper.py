@@ -28,7 +28,7 @@ class PyMavlinkHelper:
         self.vehicle = vehicle
         print("Connected to Pixhawk")
 
-        request_global_position(vehicle, rate=10)
+        request_global_position(vehicle, rate=40)
         time.sleep(0.5)
         set_drone_mode(vehicle, "LOITER")
 
