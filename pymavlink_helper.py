@@ -56,8 +56,8 @@ class PyMavlinkHelper:
             )
             print("trying recv match of arm")
             ack_msg = try_recv_match(self.vehicle, message_name="COMMAND_ACK")
-            if ack_msg.result == mavutil.mavlink.MAV_RESULT_ACCEPTED:
-                time.sleep(2)
+            if ack_msg != None and ack_msg.result == mavutil.mavlink.MAV_RESULT_ACCEPTED:
+                # time.sleep(2)
                 # set_drone_mode(self.vehicle, "GUIDED")
                 print(f"Drone armed")
             else:
