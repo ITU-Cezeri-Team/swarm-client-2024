@@ -207,7 +207,7 @@ class PyMavlinkHelper:
         set_drone_mode(self.vehicle, mode)
 
     def get_current_state(self) -> Tuple[float, float, float]:
-        msg = try_recv_match(self.vehicle, message_name="GLOBAL_POSITION_INT")
+        msg = try_recv_match(self.vehicle, message_name="GPS_RAW_DATA")
         if msg == None:
             return None
         latitude = msg.lat / 1e7
