@@ -209,7 +209,6 @@ class PyMavlinkHelper:
     def get_current_state(self) -> Tuple[float, float, float]:
         msg = try_recv_match(self.vehicle, message_name="GLOBAL_POSITION_INT")
         if msg == None:
-            print('B')
             return None
         latitude = msg.lat / 1e7
         longtitude = msg.lon / 1e7

@@ -21,7 +21,7 @@ def try_recv_match(vehicle, message_name, retries=10, timeout=1, blocking=False)
         try:
             # Try to receive the matched message
             msg = vehicle.recv_match(
-                type=message_name, blocking=blocking, timeout=timeout
+                type='GLOBAL_POSITION_INT', blocking=blocking, timeout=timeout
             )
             if msg != None:
                 print(f"Received {message_name} message.")
