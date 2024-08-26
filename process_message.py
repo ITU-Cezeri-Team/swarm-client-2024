@@ -48,6 +48,7 @@ def process_message(
         helper.land()
 
     elif message_type == MESSAGE_TYPES["move"]:
+        print('Move received')
         helper.move(
             message["args"]["lat"],
             message["args"]["lon"],
