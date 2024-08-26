@@ -2,7 +2,7 @@ from pymavlink import mavutil
 import time
 
 
-def try_recv_match(vehicle, message_name, retries=10, timeout=1):
+def try_recv_match(vehicle, message_name, retries=10, timeout=1, blocking=False):
     """
     Tries to receive a MAVLink message by matching the message name.
 
@@ -21,7 +21,7 @@ def try_recv_match(vehicle, message_name, retries=10, timeout=1):
         try:
             # Try to receive the matched message
             msg = vehicle.recv_match(
-                type=message_name, timeout=timeout
+                type=message_name, blocking=blocking, timeout=timeout
             )
             if msg != None:
                 print(f"Received {message_name} message.")
@@ -98,7 +98,7 @@ def set_drone_mode(drone: mavutil.mavlink_connection, mode: str) -> None:
     # MAVLink requires an ACK from the drone to confirm the mode change
     ack = None
     while not ack:
-        ack = try_recv_match(drone, message_name="COMMAND_ACK")
+        ack = try_recv_match(drone, message_name="COMMAND_ACK", blocking=True)
         if ack:
             try:
                 ack_result = ack.result
