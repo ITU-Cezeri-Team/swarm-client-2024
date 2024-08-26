@@ -15,7 +15,7 @@ def start_client(client_id):
     helper = PyMavlinkHelper(PIXHAWK_CONNECTION_STRING)
     heartbeat_processor = HeartbeatProcessor(die_time=10)
     # MQTT Configuration
-    BROKER = "172.23.84.139"
+    BROKER = "192.168.1.127"
     PORT = 1883
     CLIENT_ID = "CLIENT_" + str(client_id)
     topic = "drone/" + str(client_id)
