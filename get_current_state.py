@@ -1,5 +1,6 @@
 import time
 import threading
+import json
 
 
 def start_publishing_state(client, helper, topic, state_interval):
@@ -25,7 +26,7 @@ def publish_state(client, helper, topic):
             "lon": longitude,
             "alt": altitude,},
         }
-        client.publish(topic, str(state_msg))
+        client.publish(topic, json.dumps(state_msg))
         # print(f"Published state to topic {topic}: {state_msg}")
     else:
         print("Failed to retrieve GPS coordinates, not publishing.")
