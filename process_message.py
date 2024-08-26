@@ -25,7 +25,7 @@ def process_message(
     heartbeat_processor: HeartbeatProcessor,
     client_id: int,
 ) -> None:
-    topic = "server" + str(client_id)
+    topic = "server/" + str(client_id)
     message_type = message["msg_type"]
     if message_type == MESSAGE_TYPES["init_connection"]:
         helper.initialize()

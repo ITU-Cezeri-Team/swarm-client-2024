@@ -39,7 +39,7 @@ def try_recv_match(vehicle, message_name, retries=10, timeout=1, blocking=False)
     return None  # Return None if all attempts fail
 
 
-def request_global_position(drone, rate=2):
+def request_global_position(drone, rate=1):
     """
     Requests the GLOBAL_POSITION_INT data stream at a specified rate.
 

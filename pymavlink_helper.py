@@ -26,7 +26,7 @@ class PyMavlinkHelper:
         print("Trying to connect to Pixhawk")
         vehicle = mavutil.mavlink_connection(self.connection_string, baud=57600)
         print("Created vechile")
-        request_global_position(vehicle, rate=1000)
+        request_global_position(vehicle, rate=1)
         vehicle.wait_heartbeat()
         self.vehicle = vehicle
         print("Connected to Pixhawk")
