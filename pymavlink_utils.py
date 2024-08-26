@@ -20,9 +20,7 @@ def try_recv_match(vehicle, message_name, retries=10, timeout=1, blocking=False)
         # print(f"Attempt {attempt} to receive {message_name} message...")
         try:
             # Try to receive the matched message
-            msg = vehicle.recv_match(
-                type=message_name, blocking=blocking, timeout=timeout
-            )
+            msg = request_global_position(vehicle)
             if msg != None:
                 print(f"Received {message_name} message.")
                 return msg  # Return the received message if successful
