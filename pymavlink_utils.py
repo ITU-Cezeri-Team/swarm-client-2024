@@ -16,7 +16,7 @@ def try_recv_match(vehicle, message_name, retries=10, timeout=1, blocking=False)
         The matched MAVLink message if successful, None otherwise.
     """
     # print(f"Attempt to receive {message_name} message...")
-    for attempt in range(1, retries + 1):
+    for _ in range(1, retries + 1):
         # print(f"Attempt {attempt} to receive {message_name} message...")
         try:
             # Try to receive the matched message
