@@ -26,6 +26,7 @@ class PyMavlinkHelper:
         print("Trying to connect to Pixhawk")
         vehicle = mavutil.mavlink_connection(self.connection_string, baud=57600)
         print("Created vechile")
+        request_global_position(vehicle, rate=1)
         vehicle.wait_heartbeat()
         self.vehicle = vehicle
         print("Connected to Pixhawk")
@@ -207,7 +208,7 @@ class PyMavlinkHelper:
         set_drone_mode(self.vehicle, mode)
 
     def get_current_state(self) -> Tuple[float, float, float]:
-        msg = try_recv_match(self.vehicle, message_name="GPS_RAW_INT")
+        msg = try_recv_match(self.vehicle, message_name="GLOBAL_POSITION_INT")
         if msg == None:
             return None
         latitude = msg.lat / 1e7
