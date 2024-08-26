@@ -30,10 +30,10 @@ def try_recv_match(vehicle, message_name, retries=10, timeout=1, blocking=False)
             print(f"Error receiving {message_name}: {str(e)}")
 
         # If the message was not received, wait a bit before retrying
-        # print(
-        #     f"{message_name} message not received. Retrying after {timeout} seconds..."
-        # )
-        # time.sleep(timeout)
+        print(
+            f"{message_name} message not received. Retrying after {timeout} seconds..."
+        )
+        time.sleep(timeout)
 
     print(f"Failed to receive {message_name} message after {retries} attempts.")
     return None  # Return None if all attempts fail
