@@ -18,9 +18,6 @@ def publish_state(client, helper, topic):
     if positions == None:
         return
     latitude, longitude, altitude = positions
-    print(latitude)
-    print(longitude)
-    print(altitude)
     if latitude is not None and longitude is not None and altitude is not None:
         state_msg = {
             "lat": latitude,
