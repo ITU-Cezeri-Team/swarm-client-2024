@@ -20,7 +20,6 @@ def try_recv_match(vehicle, message_name, retries=10, timeout=1, blocking=False)
         # print(f"Attempt {attempt} to receive {message_name} message...")
         try:
             # Try to receive the matched message
-            print('AAA')
             msg = vehicle.recv_match(
                 type=message_name, blocking=blocking, timeout=timeout
             )
@@ -40,7 +39,7 @@ def try_recv_match(vehicle, message_name, retries=10, timeout=1, blocking=False)
     return None  # Return None if all attempts fail
 
 
-def request_global_position(drone, rate=10):
+def request_global_position(drone, rate=1):
     """
     Requests the GLOBAL_POSITION_INT data stream at a specified rate.
 
