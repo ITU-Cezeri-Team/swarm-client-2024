@@ -214,5 +214,6 @@ class PyMavlinkHelper:
         latitude = msg.lat / 1e7
         longtitude = msg.lon / 1e7
         altitude = msg.relative_alt / 1000.0
+        print(latitude, longtitude, altitude)
 
         return latitude, longtitude, altitude

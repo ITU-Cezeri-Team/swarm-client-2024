@@ -15,6 +15,8 @@ MESSAGE_TYPES = {
     "set_mode": "set_mode",
     "heartbeat": "heartbeat",
     "end_connection": "end_connection",
+    "compass_calibration": "compass_calibration",
+    "accel_compass": "accel_compass",
 }
 
 
