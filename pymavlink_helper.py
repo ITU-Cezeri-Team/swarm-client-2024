@@ -35,6 +35,7 @@ class PyMavlinkHelper:
         time.sleep(0.5)
         set_drone_mode(vehicle, "GUIDED")
         time.sleep(0.5)
+        print("Environment initialized")
 
     def arm(self, force) -> None:
         """
