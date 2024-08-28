@@ -23,11 +23,9 @@ class PyMavlinkHelper:
         """
         Initialize the environment.
         """
-        print("Trying to connect to Pixhawk")
         vehicle = mavutil.mavlink_connection(self.connection_string, baud=57600)
-        print("Created vechile")
-        request_global_position(vehicle, rate=1)
         vehicle.wait_heartbeat()
+        request_global_position(vehicle, rate=1)
         self.vehicle = vehicle
         print("Connected to Pixhawk")
         time.sleep(0.5)
@@ -53,9 +51,12 @@ class PyMavlinkHelper:
                 0,
                 0,
             )
-            print("trying recv match of arm")
+
             ack_msg = try_recv_match(self.vehicle, message_name="COMMAND_ACK")
-            if ack_msg != None and ack_msg.result == mavutil.mavlink.MAV_RESULT_ACCEPTED:
+            if (
+                ack_msg != None
+                and ack_msg.result == mavutil.mavlink.MAV_RESULT_ACCEPTED
+            ):
                 # time.sleep(2)
                 # set_drone_mode(self.vehicle, "GUIDED")
                 print(f"Drone armed")
@@ -83,7 +84,10 @@ class PyMavlinkHelper:
                 0,
             )
             ack_msg = try_recv_match(self.vehicle, message_name="COMMAND_ACK")
-            if ack_msg != None and ack_msg.result == mavutil.mavlink.MAV_RESULT_ACCEPTED:
+            if (
+                ack_msg != None
+                and ack_msg.result == mavutil.mavlink.MAV_RESULT_ACCEPTED
+            ):
                 print(f"Drone disarmed")
             else:
                 print(f"Failed to disarm drone")

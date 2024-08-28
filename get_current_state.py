@@ -22,9 +22,11 @@ def publish_state(client, helper, topic):
     if latitude is not None and longitude is not None and altitude is not None:
         state_msg = {
             "msg_type": "state_msg",
-            "args":{"lat": latitude,
-            "lon": longitude,
-            "alt": altitude,},
+            "args": {
+                "lat": latitude,
+                "lon": longitude,
+                "alt": altitude,
+            },
         }
         client.publish(topic, json.dumps(state_msg))
         # print(f"Published state to topic {topic}: {state_msg}")
