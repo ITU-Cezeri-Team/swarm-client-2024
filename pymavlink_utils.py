@@ -26,7 +26,7 @@ def try_recv_match(
                 type=message_name, blocking=blocking, timeout=timeout
             )
             if msg != None:
-                print(f"Received {message_name} message.")
+                # print(f"Received {message_name} message.")
                 return msg  # Return the received message if successful
         except Exception as e:
             print(f"Error receiving {message_name}: {str(e)}")
