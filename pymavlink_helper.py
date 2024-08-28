@@ -221,3 +221,97 @@ class PyMavlinkHelper:
         print(latitude, longtitude, altitude)
 
         return latitude, longtitude, altitude
+
+    def start_compass_calibration(self) -> None:
+        """
+        Start compass calibration for the drone.
+        """
+        print("Starting compass calibration...")
+
+        try:
+            # Send MAV_CMD_DO_START_MAG_CAL command
+            self.vehicle.mav.command_long_send(
+                self.vehicle.target_system,
+                self.vehicle.target_component,
+                mavutil.mavlink.MAV_CMD_DO_START_MAG_CAL,
+                0,  # confirmation
+                0,  # autopilot mag device ID (0 for all)
+                1,  # autopilot mag orientation
+                1,  # internal mag orientation
+                0,  # external mag 1 orientation (0 for default)
+                0,  # external mag 2 orientation (0 for default)
+                0,  # external mag 3 orientation (0 for default)
+                0,  # reserved, set to 0
+            )
+
+            # Monitor the calibration process
+            while True:
+                msg = self.vehicle.recv_match(
+                    type=["MAG_CAL_PROGRESS", "MAG_CAL_REPORT"], blocking=True
+                )
+                if msg:
+                    print(msg)
+                    if (
+                        msg.get_type() == "MAG_CAL_REPORT" and msg.cal_status == 5
+                    ):  # 5 indicates calibration completed
+                        print("Compass calibration completed successfully!")
+                        break
+                time.sleep(0.5)
+
+        except Exception as e:
+            print(f"Compass calibration failed: {str(e)}")
+
+    def cancel_compass_calibration(self) -> None:
+        """
+        Cancel ongoing compass calibration.
+        """
+        print("Cancelling compass calibration...")
+
+        try:
+            # Send MAV_CMD_DO_CANCEL_MAG_CAL command
+            self.vehicle.mav.command_long_send(
+                self.vehicle.target_system,
+                self.vehicle.target_component,
+                mavutil.mavlink.MAV_CMD_DO_CANCEL_MAG_CAL,
+                0,  # confirmation
+                0,  # Reserved, set to 0
+                0,  # Reserved, set to 0
+                0,  # Reserved, set to 0
+                0,  # Reserved, set to 0
+                0,  # Reserved, set to 0
+                0,  # Reserved, set to 0
+            )
+
+            print("Compass calibration canceled.")
+        except Exception as e:
+            print(f"Failed to cancel compass calibration: {str(e)}")
+
+    def reboot(self) -> None:
+        """
+        Reboot the drone by sending a reboot command.
+        """
+        print("Rebooting the drone...")
+        try:
+            # Send MAV_CMD_PREFLIGHT_REBOOT_SHUTDOWN command to reboot
+            self.vehicle.mav.command_long_send(
+                self.vehicle.target_system,
+                self.vehicle.target_component,
+                mavutil.mavlink.MAV_CMD_PREFLIGHT_REBOOT_SHUTDOWN,
+                0,
+                1,  # 1 for reboot
+                0,  # reserved, set to 0
+                0,  # reserved, set to 0
+                0,  # reserved, set to 0
+                0,  # reserved, set to 0
+                0,  # reserved, set to 0
+                0,  # reserved, set to 0
+            )
+
+            # Optionally, you might need to close the connection and reopen it after reboot
+            self.vehicle.close()
+            print("Drone rebooted. Reconnecting...")
+            time.sleep(10)  # Wait for the drone to reboot and reconnect
+            self.initialize()  # Reinitialize connection
+
+        except Exception as e:
+            print(f"Failed to reboot drone: {str(e)}")
