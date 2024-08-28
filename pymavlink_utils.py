@@ -3,7 +3,7 @@ import time
 
 
 def try_recv_match(
-    vehicle, message_name: str, retries: int = 10, timeout: float = 1, blocking=False
+    vehicle, message_name: str, retries: int = 10, timeout: float = 1, blocking=True
 ):
     """
     Tries to receive a MAVLink message by matching the message name.
@@ -35,7 +35,7 @@ def try_recv_match(
         print(
             f"{message_name} message not received. Retrying after {timeout} seconds..."
         )
-        time.sleep(timeout)
+        # time.sleep(timeout)
 
     print(f"Failed to receive {message_name} message after {retries} attempts.")
     return None  # Return None if all attempts fail

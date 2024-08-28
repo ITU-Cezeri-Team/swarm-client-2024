@@ -17,16 +17,20 @@ class PyMavlinkHelper:
 
     def __init__(self, connection_string: str) -> None:
         self.connection_string = connection_string
+        self.is_initialized = False
         pass
 
     def initialize(self) -> None:
         """
         Initialize the environment.
         """
+        if self.is_initialized:
+            return
         vehicle = mavutil.mavlink_connection(self.connection_string, baud=57600)
         vehicle.wait_heartbeat()
         request_global_position(vehicle, rate=1)
         self.vehicle = vehicle
+        self.is_initialized = True
         print("Connected to Pixhawk")
         time.sleep(0.5)
         set_drone_mode(vehicle, "GUIDED")
@@ -59,6 +63,7 @@ class PyMavlinkHelper:
             ):
                 # time.sleep(2)
                 # set_drone_mode(self.vehicle, "GUIDED")
+                self.is_armed = True
                 print(f"Drone armed")
             else:
                 print(f"Failed to arm drone")
