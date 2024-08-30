@@ -17,6 +17,8 @@ MESSAGE_TYPES = {
     "end_connection": "end_connection",
     "compass_calibration": "compass_calibration",
     "accel_compass": "accel_compass",
+    "return_to_launch": "return_to_launch",
+    "set_home": "set_home",
 }
 
 
@@ -70,6 +72,12 @@ def process_message(
         client.disconnect()
         time.sleep(2)
         exit()
-
+    
+    elif message_type == MESSAGE_TYPES["set_home"]:
+        helper.set_home(message["args"]["lat"], message["args"]["lon"], message["args"]["alt"])
+        
+    elif message_type == MESSAGE_TYPES["return_to_launch"]:
+        helper.return_to_launch()
+    
     else:
         raise ValueError("Invalid message type")

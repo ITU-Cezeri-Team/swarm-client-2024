@@ -320,3 +320,40 @@ class PyMavlinkHelper:
 
         except Exception as e:
             print(f"Failed to reboot drone: {str(e)}")
+            
+    def set_home(self,lat,lon,alt) -> Tuple[float, float, float]:
+        """
+        Set the current location as the home location for the drone.
+        """
+        print("Setting home location...")
+        try:
+            # Send MAV_CMD_DO_SET_HOME command
+            self.vehicle.mav.command_long_send(
+                self.vehicle.target_system,
+                self.vehicle.target_component,
+                mavutil.mavlink.MAV_CMD_DO_SET_HOME,
+                0,  
+                0,  
+                0,  
+                0,  
+                0,  
+                lat,
+                lon,
+                alt,
+            )
+
+            print(f"Home location set to {lat, lon, alt}")
+            return lat, lon
+
+        except Exception as e:
+            print(f"Failed to set home location: {str(e)}")
+            
+    def return_to_launch(self) -> None:
+        """
+        Send the Return-to-Launch (RTL) command to the drone.
+        """
+        lat , lon = self.set_home()
+        print("Returning to launch...")
+        self.move(self, lat, lon, 0, 0, 0, 0)
+        time.sleep(0.5)
+        self.land()
