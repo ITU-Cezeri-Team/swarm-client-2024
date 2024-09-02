@@ -118,7 +118,7 @@ class PyMavlinkHelper:
                 if altitude >= target_altitude * 0.85:  # 85% of target altitude
                     print("Reached target altitude")
                     break
-                time.sleep(1)  # Wait before checking altitude again
+                time.sleep(0.1)  # Wait before checking altitude again
 
         try:
             if target_altitude <= 0:
@@ -163,7 +163,7 @@ class PyMavlinkHelper:
                 ):  # Assume landed if altitude is less than or equal to 0.3 meters
                     print("Drone Landed")
                     break
-                time.sleep(1)
+                time.sleep(0.1)
 
         try:
             print("Landing drone...")
