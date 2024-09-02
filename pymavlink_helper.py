@@ -28,7 +28,7 @@ class PyMavlinkHelper:
             return
         vehicle = mavutil.mavlink_connection(self.connection_string, baud=57600)
         vehicle.wait_heartbeat()
-        request_global_position(vehicle, rate=5)
+        request_global_position(vehicle, rate=1)
         self.vehicle = vehicle
         self.is_initialized = True
         print("Connected to Pixhawk")
@@ -118,7 +118,7 @@ class PyMavlinkHelper:
                 if altitude >= target_altitude * 0.85:  # 85% of target altitude
                     print("Reached target altitude")
                     break
-                time.sleep(0.2)  # Wait before checking altitude again
+                time.sleep(1)  # Wait before checking altitude again
 
         try:
             if target_altitude <= 0:
@@ -163,7 +163,7 @@ class PyMavlinkHelper:
                 ):  # Assume landed if altitude is less than or equal to 0.3 meters
                     print("Drone Landed")
                     break
-                time.sleep(0.2)
+                time.sleep(1)
 
         try:
             print("Landing drone...")
