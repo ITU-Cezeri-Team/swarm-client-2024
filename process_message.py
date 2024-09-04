@@ -32,6 +32,9 @@ def process_message(
     topic = "server/" + str(client_id)
     message_type = message["msg_type"]
     if message_type == MESSAGE_TYPES["init_connection"]:
+        if helper.is_initialized:
+            return
+        
         helper.initialize()
 
         heartbeat_interval = message["args"]["heartbeat_interval"] / 1000

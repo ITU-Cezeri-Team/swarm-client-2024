@@ -18,7 +18,6 @@ class PyMavlinkHelper:
     def __init__(self, connection_string: str) -> None:
         self.connection_string = connection_string
         self.is_initialized = False
-        pass
 
     def initialize(self) -> None:
         """
