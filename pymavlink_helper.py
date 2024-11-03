@@ -40,6 +40,7 @@ class PyMavlinkHelper:
         """
         Arm the vehicle.
         """
+        set_drone_mode(self.vehicle, 'STABILIZE')
 
         try:
             self.vehicle.mav.command_long_send(
